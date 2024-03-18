@@ -23,10 +23,10 @@ public class DataLoader {
                     .firstName("name")
                     .lastName("surname")
                     .email("email")
+                    .password(passwordEncoder.encode("pass"))
                     .appUserRole(AppUserRole.USER)
                     .enabled(true)
                     .locked(false)
-                    .password(passwordEncoder.encode("pass"))
                     .build();
 
             appUserRepository.save(user);
