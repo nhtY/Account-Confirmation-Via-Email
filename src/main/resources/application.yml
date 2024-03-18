@@ -3,6 +3,7 @@ server:
     include-binding-errors: always
     include-message: always
 
+
 spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL}
@@ -18,3 +19,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         use_sql_comments: true
+#logging:
+#  level:
+#    org.springframework: debug
+#    org.springframework.security: trace
+#    web: trace
