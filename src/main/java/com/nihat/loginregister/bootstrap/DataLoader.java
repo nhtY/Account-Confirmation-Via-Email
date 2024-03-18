@@ -20,13 +20,12 @@ public class DataLoader {
     public CommandLineRunner run() {
         return args -> {
             AppUser user = AppUser.builder()
-                    .name("name")
-                    .surname("surname")
+                    .firstName("name")
+                    .lastName("surname")
                     .email("email")
                     .appUserRole(AppUserRole.USER)
                     .enabled(true)
                     .locked(false)
-                    .username("user")
                     .password(passwordEncoder.encode("pass"))
                     .build();
 
