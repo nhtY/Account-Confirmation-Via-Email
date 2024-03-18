@@ -18,29 +18,4 @@ public class LoginRegisterApplication {
 		SpringApplication.run(LoginRegisterApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner run(DataSource dataSource) {
-		return args -> {
-			System.out.println("Hello World");
-
-			Connection conn = null;
-			try (Connection connection = dataSource.getConnection()){
-				conn = connection;
-				System.out.println("Connected to the database");
-
-				DatabaseMetaData metaData = connection.getMetaData();
-				System.out.println("Connected to: " + metaData.getDatabaseProductName());
-				System.out.println("Driver: " + metaData.getDriverName());
-
-			} catch (Exception e) {
-				System.out.println("Error: ");
-				System.out.println(e);
-			} finally {
-				System.out.println("Closing connection");
-				if (conn != null) {
-					conn.close();
-				}
-			}
-		};
-	}
 }
