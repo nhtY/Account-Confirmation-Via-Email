@@ -13,6 +13,8 @@ public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
 
     private final AppUserRepository appUserRepository;
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return appUserRepository.findByEmail(email)
@@ -21,8 +23,15 @@ public class AppUserService implements UserDetailsService {
                 ));
     }
 
-    // TODO return a link for confirmation
+    // TODO send confirmation token
     public String signUpUser(AppUser user) {
-        return "";
+        boolean userExists = appUserRepository.findByEmail(user.getEmail()).isPresent();
+
+        if (userExists) {
+            throw new IllegalStateException("email already taken");
+        }
+
+        appUserRepository.save(user);
+        return "Sign Up works";
     }
 }
