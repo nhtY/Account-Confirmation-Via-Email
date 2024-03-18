@@ -20,4 +20,9 @@ public class AppUserService implements UserDetailsService {
                         String.format(USER_NOT_FOUND_MSG, email)
                 ));
     }
+
+    // TODO return a link for confirmation
+    public String signUpUser(AppUser user) {
+        return "";
+    }
 }
