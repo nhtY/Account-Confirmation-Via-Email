@@ -31,8 +31,8 @@ public class AppUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false; // after confirming the e-mail it will be enabled.
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
