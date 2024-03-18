@@ -13,7 +13,6 @@ import java.util.Collections;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppUser implements UserDetails {
