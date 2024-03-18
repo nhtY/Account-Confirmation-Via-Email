@@ -1,5 +1,7 @@
 package com.nihat.loginregister.appuser;
 
+import com.nihat.loginregister.registration.token.ConfirmationToken;
+import com.nihat.loginregister.registration.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +15,7 @@ public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
 
     private final AppUserRepository appUserRepository;
+    private final ConfirmationTokenService confirmationTokenService;
 
 
     @Override
@@ -31,7 +34,14 @@ public class AppUserService implements UserDetailsService {
             throw new IllegalStateException("email already taken");
         }
 
-        appUserRepository.save(user);
-        return "Sign Up works";
+        // register user:
+        AppUser savedUser = appUserRepository.save(user);
+
+        // create a new confirmation token for the registered user:
+        ConfirmationToken confirmationToken = confirmationTokenService.generateToken(savedUser);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        // TODO: SEND EMAIL
+        return confirmationToken.getToken();
     }
 }
