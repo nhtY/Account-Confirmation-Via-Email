@@ -2,7 +2,6 @@ package com.nihat.loginregister.controllers;
 
 import com.nihat.loginregister.registration.RegistrationRequest;
 import com.nihat.loginregister.registration.RegistrationService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
