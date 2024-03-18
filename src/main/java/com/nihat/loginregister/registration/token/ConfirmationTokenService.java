@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,5 +28,16 @@ public class ConfirmationTokenService {
                 .confirmedAt(null)
                 .appUser(user)
                 .build();
+    }
+
+    public Optional<ConfirmationToken> getToken(String token) {
+        return Optional.of(confirmationTokenRepository.findByToken(token))
+                .orElse(null);
+    }
+
+    public int setConfirmedAt(String token) {
+        return confirmationTokenRepository.updateConfirmedAt(
+                token, LocalDateTime.now()
+        );
     }
 }
