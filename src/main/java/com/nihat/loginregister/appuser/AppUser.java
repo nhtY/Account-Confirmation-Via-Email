@@ -31,7 +31,12 @@ public class AppUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
+
+    // Class seviyesindeki Builder kullanılırsa atama yapılan bu değerler null geçiyor.
+    // @Builder.Default ile 'atanan değerlerin' (false) kullanılmasını sağla.
+    @Builder.Default
     private Boolean locked = false;
+    @Builder.Default
     private Boolean enabled = false; // after confirming the e-mail it will be enabled.
 
     @Override
