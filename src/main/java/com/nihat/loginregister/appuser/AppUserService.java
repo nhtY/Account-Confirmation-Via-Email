@@ -26,7 +26,11 @@ public class AppUserService implements UserDetailsService {
                 ));
     }
 
-    // TODO send confirmation token
+    /**
+     * Saves user and generates a token if user not exist.
+     * @param user
+     * @return String token
+     */
     public String signUpUser(AppUser user) {
         boolean userExists = appUserRepository.findByEmail(user.getEmail()).isPresent();
 
