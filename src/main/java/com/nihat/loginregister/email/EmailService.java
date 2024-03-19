@@ -26,6 +26,7 @@ public class EmailService implements EmailSender{
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
             helper.setText(email, true);
             helper.setTo(to);
+            helper.setSubject("Confirm your email");
             helper.setFrom("no-reply@authapp.com");
 
         } catch (MessagingException e) {
