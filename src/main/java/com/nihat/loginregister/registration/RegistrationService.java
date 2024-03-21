@@ -7,16 +7,12 @@ import com.nihat.loginregister.email.EmailSender;
 import com.nihat.loginregister.registration.token.ConfirmationToken;
 import com.nihat.loginregister.registration.token.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.FileCopyUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 @Service
@@ -28,7 +24,9 @@ public class RegistrationService {
     private final EmailValidator emailValidator;
     private final PasswordEncoder passwordEncoder;
     private final EmailSender emailSender;
+    private final TemplateEngine templateEngine;
 
+    @Transactional
     public String register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.email());
         if (!isValidEmail) {
@@ -79,20 +77,13 @@ public class RegistrationService {
 
     }
 
-    private String buildEmail(String name, String link) {
-        try {
-            // Read the email template from the resources directory
-            ClassPathResource resource = new ClassPathResource("email-template.html");
-            Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-            String template = FileCopyUtils.copyToString(reader);
+    public String buildEmail(String name, String link) {
+        // Create a Thymeleaf context
+        Context context = new Context();
+        context.setVariable("name", name);
+        context.setVariable("link", link);
 
-            // Replace placeholders with actual values
-            template = template.replace("{name}", name);
-            template = template.replace("{link}", link);
-
-            return template;
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to read email template", e);
-        }
+        // Process the template
+        return templateEngine.process("email_template", context);
     }
 }
