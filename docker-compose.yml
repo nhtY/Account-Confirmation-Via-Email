@@ -16,12 +16,21 @@ services:
     volumes:
       - auth_app_data:/data/db
 
+  mailserver:
+    image: maildev/maildev
+    restart: always
+    container_name: maildev
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+
   spring_auth_app:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
       - postgres
+      - mailserver
     ports:
       - "8080:8080"
     env_file:
