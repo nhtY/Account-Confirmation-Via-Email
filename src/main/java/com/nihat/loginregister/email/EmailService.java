@@ -23,7 +23,7 @@ public class EmailService implements EmailSender{
         try {
 
             MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
